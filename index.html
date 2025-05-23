@@ -67,8 +67,8 @@
           <li><a class="nav-link scrollto" href="#specials">Specials</a></li>
           <li><a class="nav-link scrollto" href="#events">Decoration</a></li>
           <li><a class="nav-link scrollto" href="#gallery">Clients</a></li>
-          
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link" href="cart.html"><i class="bi bi-cart3"></i></a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -173,35 +173,22 @@
     <section id="menu" class="menu section-bg">
       <div class="container" data-aos="fade-up">
 
-        <div class="section-title">
-          <h2>Menu</h2>
-          <p>Check Our Tasty Menu</p>
+        <div class="section-header">
+          <h2>Our Menu</h2>
+          <p>Check Our <span>Products</span></p>
         </div>
 
-        <div class="row" data-aos="fade-up" data-aos-delay="100">
-          <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="menu-flters">
-              <li data-filter="*" class="filter-active">All</li>
-              <li data-filter=".filter-starters">T-Shirts</li>
-              <li data-filter=".filter-salads">Hoodies</li>
-              <li data-filter=".filter-specialty">Specialty</li>
-            </ul>
-          </div>
-        </div>
+        <ul id="menu-flters" class="d-flex justify-content-center">
+          <li data-filter="*" class="filter-active">All</li>
+          <li data-filter=".filter-tshirts">T-Shirts</li>
+          <li data-filter=".filter-hoodies">Hoodies</li>
+          <li data-filter=".filter-sandals">Sandals</li>
+          <li data-filter=".filter-caps">Caps</li>
+        </ul>
 
-        <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+        <div class="row menu-container">
 
-          <div class="col-lg-6 menu-item filter-starters">
-            <img src="assets/img/menu/lobster-bisque.jpg" class="menu-img" alt="">
-            <div class="menu-content">
-              <a href="#">Sandals</a><span>R200</span>
-            </div>
-            <div class="menu-ingredients">
-              an open type of shoe
-            </div>
-          </div>
-
-          <div class="col-lg-6 menu-item filter-specialty">
+          <div class="col-lg-6 menu-item filter-tshirts">
             <img src="assets/img/menu/bread-barrel.jpg" class="menu-img" alt="">
             <div class="menu-content">
               <a href="#">T-Shirt</a><span>R150</span>
@@ -209,29 +196,17 @@
             <div class="menu-ingredients">
               Short Sleeves
             </div>
-          </div>
-
-          <div class="col-lg-6 menu-item filter-starters">
-            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="">
-            <div class="menu-content">
-              <a href="#">Long Sleeves</a><span>R350</span>
-            </div>
-            <div class="menu-ingredients">
-              feel happy
+            <div class="mt-3">
+              <button class="btn btn-primary add-to-cart" 
+                      data-name="T-Shirt" 
+                      data-price="150" 
+                      data-image="assets/img/menu/bread-barrel.jpg">
+                Add to Cart
+              </button>
             </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-salads">
-            <img src="assets/img/menu/caesar.jpg" class="menu-img" alt="">
-            <div class="menu-content">
-              <a href="#">hoodie</a><span>R450</span>
-            </div>
-            <div class="menu-ingredients">
-              feel warm this summer
-            </div>
-          </div>
-
-          <div class="col-lg-6 menu-item filter-specialty">
+          <div class="col-lg-6 menu-item filter-tshirts">
             <img src="assets/img/menu/tuscan-grilled.jpg" class="menu-img" alt="">
             <div class="menu-content">
               <a href="#">T-Shirt</a><span>R180</span>
@@ -239,9 +214,17 @@
             <div class="menu-ingredients">
               feel free this summer
             </div>
+            <div class="mt-3">
+              <button class="btn btn-primary add-to-cart" 
+                      data-name="T-Shirt" 
+                      data-price="180" 
+                      data-image="assets/img/menu/tuscan-grilled.jpg">
+                Add to Cart
+              </button>
+            </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-starters">
+          <div class="col-lg-6 menu-item filter-tshirts">
             <img src="assets/img/menu/mozzarella.jpg" class="menu-img" alt="">
             <div class="menu-content">
               <a href="#">T-Shirt</a><span>R250</span>
@@ -249,35 +232,103 @@
             <div class="menu-ingredients">
               Look presentable
             </div>
+            <div class="mt-3">
+              <button class="btn btn-primary add-to-cart" 
+                      data-name="T-Shirt" 
+                      data-price="250" 
+                      data-image="assets/img/menu/mozzarella.jpg">
+                Add to Cart
+              </button>
+            </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-salads">
+          <div class="col-lg-6 menu-item filter-hoodies">
+            <img src="assets/img/menu/caesar.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Hoodie</a><span>R450</span>
+            </div>
+            <div class="menu-ingredients">
+              feel warm this summer
+            </div>
+            <div class="mt-3">
+              <button class="btn btn-primary add-to-cart" 
+                      data-name="Hoodie" 
+                      data-price="450" 
+                      data-image="assets/img/menu/caesar.jpg">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-sandals">
+            <img src="assets/img/menu/lobster-bisque.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Sandals</a><span>R200</span>
+            </div>
+            <div class="menu-ingredients">
+              an open type of shoe
+            </div>
+            <div class="mt-3">
+              <button class="btn btn-primary add-to-cart" 
+                      data-name="Sandals" 
+                      data-price="200" 
+                      data-image="assets/img/menu/lobster-bisque.jpg">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-caps">
+            <img src="assets/img/menu/cake.jpg" class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="#">Cap</a><span>R120</span>
+            </div>
+            <div class="menu-ingredients">
+              Stylish and comfortable
+            </div>
+            <div class="mt-3">
+              <button class="btn btn-primary add-to-cart" 
+                      data-name="Cap" 
+                      data-price="120" 
+                      data-image="assets/img/menu/cake.jpg">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+
+          <div class="col-lg-6 menu-item filter-caps">
             <img src="assets/img/menu/greek-salad.jpg" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">T-Shirt</a><span>R150</span>
+              <a href="#">Cap</a><span>R150</span>
             </div>
             <div class="menu-ingredients">
-              Look presentable
+              Premium quality
+            </div>
+            <div class="mt-3">
+              <button class="btn btn-primary add-to-cart" 
+                      data-name="Cap" 
+                      data-price="150" 
+                      data-image="assets/img/menu/greek-salad.jpg">
+                Add to Cart
+              </button>
             </div>
           </div>
 
-          <div class="col-lg-6 menu-item filter-salads">
+          <div class="col-lg-6 menu-item filter-sandals">
             <img src="assets/img/menu/spinach-salad.jpg" class="menu-img" alt="">
             <div class="menu-content">
-              <a href="#">Two-Peace-set</a><span>R300</span>
+              <a href="#">Sandals</a><span>R250</span>
             </div>
             <div class="menu-ingredients">
-              feel free this summer
+              Premium comfort
             </div>
-          </div>
-
-          <div class="col-lg-6 menu-item filter-specialty">
-            <img src="assets/img/menu/lobster-roll.jpg" class="menu-img" alt="">
-            <div class="menu-content">
-              <a href="#">T-Shirt</a><span>R180</span>
-            </div>
-            <div class="menu-ingredients">
-              Look presentable
+            <div class="mt-3">
+              <button class="btn btn-primary add-to-cart" 
+                      data-name="Sandals" 
+                      data-price="250" 
+                      data-image="assets/img/menu/spinach-salad.jpg">
+                Add to Cart
+              </button>
             </div>
           </div>
 
@@ -772,7 +823,11 @@
       </div>
 
       <div data-aos="fade-up">
-        <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12097.433213460943!2d-74.0062269!3d40.7101282!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb89d1fe6bc499443!2sDowntown+Conference+Center!5e0!3m2!1smk!2sbg!4v1539943755621" frameborder="0" allowfullscreen></iframe>
+        <iframe style="border:0; width: 100%; height: 350px;" 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3514.1234567890123!2d31.6167!3d-27.3667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e8d7b3b3b3b3b3b%3A0x1e8d7b3b3b3b3b3b!2sKwashoba%20Rd%2C%20Pongola%2C%203170%2C%20P.O.BOX%20430%2C%20Pongola%2C%203170!5e0!3m2!1sen!2sza!4v1621234567890!5m2!1sen!2sza" 
+                frameborder="0" 
+                allowfullscreen>
+        </iframe>
       </div>
 
       <div class="container" data-aos="fade-up">
@@ -799,7 +854,7 @@
               <div class="email">
                 <i class="bi bi-envelope"></i>
                 <h4>Email:</h4>
-                <p>info@example.com</p>
+                <p>simelanelucky77@gmail.com</p>
               </div>
 
               <div class="phone">
@@ -859,7 +914,7 @@
                 Pongola <br>
                 Kwashoba Area, 3170<br><br>
                 <strong>Phone:</strong> +27 73 679 0241<br>
-                <strong>Email:</strong> info@example.com<br>
+                <strong>Email:</strong> simelanelucky77@gmail.com<br>
               </p>
             </div>
           </div>
@@ -904,6 +959,45 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+  <script>
+    // Add to cart functionality
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const item = {
+                name: this.dataset.name,
+                price: parseInt(this.dataset.price),
+                image: this.dataset.image,
+                quantity: 1,
+                size: 'M', // Default size
+                color: 'Black' // Default color
+            };
+
+            // Get existing cart or initialize empty array
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if item already exists in cart
+            const existingItemIndex = cart.findIndex(cartItem => 
+                cartItem.name === item.name && 
+                cartItem.price === item.price
+            );
+
+            if (existingItemIndex > -1) {
+                // Increment quantity if item exists
+                cart[existingItemIndex].quantity += 1;
+            } else {
+                // Add new item if it doesn't exist
+                cart.push(item);
+            }
+
+            // Save updated cart
+            localStorage.setItem('cart', JSON.stringify(cart));
+            
+            // Show confirmation
+            alert('Item added to cart! You can select size and color in the cart.');
+        });
+    });
+  </script>
 
 </body>
 

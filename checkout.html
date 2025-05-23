@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Checkout - LAS</title>
+    
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Checkout</h2>
+        <div class="row mt-4">
+            <div class="col-md-8">
+                <form id="checkout-form" class="php-email-form" action="https://formspree.io/f/simelanelucky77@gmail.com" method="POST">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone" required>
+                    </div>
+                    <div class="form-group mt-3">
+                        <input type="text" class="form-control" name="address" id="address" placeholder="Your Address" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group mt-3">
+                            <input type="text" class="form-control" name="city" id="city" placeholder="City" required>
+                        </div>
+                        <div class="col-md-6 form-group mt-3">
+                            <input type="text" class="form-control" name="postal_code" id="postal_code" placeholder="Postal Code" required>
+                        </div>
+                    </div>
+                    <input type="hidden" name="order_details" id="order_details">
+                    <div class="my-3">
+                        <div class="loading">Loading</div>
+                        <div class="error-message"></div>
+                        <div class="sent-message">Your order has been placed. Thank you!</div>
+                    </div>
+                    <div class="text-center"><button type="submit">Place Order</button></div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Order Summary</h4>
+                        <div id="order-summary">
+                            <!-- Order summary will be dynamically added here -->
+                        </div>
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <h5>Total:</h5>
+                            <h5>R<span id="order-total">0</span></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load order summary
+        function loadOrderSummary() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const summaryContainer = document.getElementById('order-summary');
+            const totalElement = document.getElementById('order-total');
+            const orderDetailsInput = document.getElementById('order_details');
+            let total = 0;
+            let orderDetails = '';
+
+            summaryContainer.innerHTML = '';
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                summaryContainer.innerHTML += `
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>${item.name} x ${item.quantity}</span>
+                        <span>R${itemTotal}</span>
+                    </div>
+                `;
+
+                orderDetails += `${item.name}\n`;
+                orderDetails += `Size: ${item.size}\n`;
+                orderDetails += `Color: ${item.color}\n`;
+                orderDetails += `Quantity: ${item.quantity}\n`;
+                orderDetails += `Price: R${item.price}\n\n`;
+            });
+
+            orderDetails += `Total: R${total}`;
+            orderDetailsInput.value = orderDetails;
+            totalElement.textContent = total;
+        }
+
+        // Handle form submission
+        document.getElementById('checkout-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading message
+            document.querySelector('.loading').style.display = 'block';
+            document.querySelector('.error-message').style.display = 'none';
+            document.querySelector('.sent-message').style.display = 'none';
+
+            // Submit the form
+            this.submit();
+            
+            // Clear cart and show success message
+            localStorage.removeItem('cart');
+            document.querySelector('.loading').style.display = 'none';
+            document.querySelector('.sent-message').style.display = 'block';
+            
+            // Redirect to home page after 3 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 3000);
+        });
+
+        // Load order summary when page loads
+        document.addEventListener('DOMContentLoaded', loadOrderSummary);
+    </script>
+</body>
+</html> 
