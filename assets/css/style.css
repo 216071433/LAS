@@ -931,10 +931,14 @@ section {
 }
 
 .menu .menu-img {
-  width: 70px;
-  border-radius: 50%;
+  width: 100px;
+  width: 45%;
+  height: 250px;
+  border-radius: 30px;
+  object-fit: cover;
   float: left;
-  border: 5px solid rgba(255, 255, 255, 0.2);
+  margin-right: 20px;
+  
 }
 
 .menu .menu-content {
@@ -961,7 +965,7 @@ section {
   background: #1a1814;
   position: relative;
   z-index: 3;
-  font-weight: 700;
+  font-weight: 500;
   color: white;
   transition: 0.3s;
 }
@@ -1344,6 +1348,75 @@ section {
 
 .gallery .gallery-item:hover img {
   transform: scale(1.1);
+}
+
+/*--------------------------------------------------------------
+# Gallery Carousel
+--------------------------------------------------------------*/
+.gallery .carousel {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.gallery .carousel-item {
+  height: 600px;
+  background: #1a1814;
+}
+
+.gallery .carousel-item img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.gallery .carousel-control-prev,
+.gallery .carousel-control-next {
+  width: 5%;
+  opacity: 0.8;
+}
+
+.gallery .carousel-control-prev:hover,
+.gallery .carousel-control-next:hover {
+  opacity: 1;
+}
+
+.gallery .carousel-indicators {
+  margin-bottom: 1rem;
+}
+
+.gallery .carousel-indicators button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 5px;
+  background-color: #cda45e;
+  opacity: 0.5;
+}
+
+.gallery .carousel-indicators button.active {
+  opacity: 1;
+}
+
+/* Add responsive adjustments */
+@media (max-width: 992px) {
+  .gallery .carousel {
+    max-width: 800px;
+  }
+  
+  .gallery .carousel-item {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery .carousel {
+    max-width: 100%;
+  }
+  
+  .gallery .carousel-item {
+    height: 300px;
+  }
 }
 
 /*--------------------------------------------------------------
