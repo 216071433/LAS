@@ -69,6 +69,9 @@
           <li><a class="nav-link scrollto" href="#gallery">Clients</a></li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
           <li><a class="nav-link" href="cart.html"><i class="bi bi-cart3"></i></a></li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#categoryModal">Shop</a>
+          </li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -740,7 +743,7 @@
         </div>
 
       </div>
-    </section><!-- End Gallery Section -->
+    <!-- </section>End Gallery Section -->
 
     <!-- ======= Chefs Section ======= -->
     <!-- <section id="chefs" class="chefs">
@@ -998,6 +1001,227 @@
         });
     });
   </script>
+
+  <!-- Category Modal -->
+  <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="categoryModalLabel">Browse Products</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <!-- Category Filter Buttons -->
+          <div class="category-filters mb-4">
+            <button class="btn btn-outline-dark active" data-category="all">All</button>
+            <button class="btn btn-outline-dark" data-category="t-shirts">T-Shirts</button>
+            <button class="btn btn-outline-dark" data-category="hoodies">Hoodies</button>
+            <button class="btn btn-outline-dark" data-category="sandals">Sandals</button>
+            <button class="btn btn-outline-dark" data-category="caps">Caps</button>
+          </div>
+          
+          <!-- Products Grid -->
+          <div class="row" id="productsGrid">
+            <!-- Products will be dynamically added here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add this to your existing JavaScript -->
+  <script>
+    // Product data
+    const products = [
+      {
+        id: 1,
+        name: "Classic T-Shirt",
+        category: "t-shirts",
+        price: 299.99,
+        image: "assets/img/menu/t-shirt-1.jpg",
+        sizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
+        colors: ["Black", "White", "Blue", "Red"]
+      },
+      {
+        id: 2,
+        name: "Premium Hoodie",
+        category: "hoodies",
+        price: 499.99,
+        image: "assets/img/menu/hoodie-1.jpg",
+        sizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
+        colors: ["Black", "White", "Blue", "Red", "Grey"]
+      },
+      {
+        id: 3,
+        name: "Comfort Sandals",
+        category: "sandals",
+        price: 399.99,
+        image: "assets/img/menu/sandals-1.jpg",
+        sizes: ["XS", "S", "M", "L", "XL", "XXL", "XXXL"],
+        colors: ["Black", "White", "Brown"]
+      },
+      {
+        id: 4,
+        name: "Sport Cap",
+        category: "caps",
+        price: 199.99,
+        image: "assets/img/menu/cap-1.jpg",
+        sizes: ["One Size"],
+        colors: ["Black", "White", "Blue", "Red"]
+      }
+      // Add more products as needed
+    ];
+
+    // Function to display products
+    function displayProducts(category = 'all') {
+      const productsGrid = document.getElementById('productsGrid');
+      productsGrid.innerHTML = '';
+
+      const filteredProducts = category === 'all' 
+        ? products 
+        : products.filter(product => product.category === category);
+
+      filteredProducts.forEach(product => {
+        const productCard = `
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+              <img src="${product.image}" class="card-img-top" alt="${product.name}">
+              <div class="card-body">
+                <h5 class="card-title">${product.name}</h5>
+                <p class="card-text">R${product.price}</p>
+                <div class="d-grid gap-2">
+                  <button class="btn btn-outline-primary" onclick="viewProduct(${product.id})">View Details</button>
+                  <button class="btn btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        productsGrid.innerHTML += productCard;
+      });
+    }
+
+    // Function to view product details
+    function viewProduct(productId) {
+      const product = products.find(p => p.id === productId);
+      const modal = new bootstrap.Modal(document.getElementById('productDetailsModal'));
+      
+      // Update modal content
+      document.getElementById('modalProductImage').src = product.image;
+      document.getElementById('modalProductName').textContent = product.name;
+      document.getElementById('modalProductPrice').textContent = `R${product.price}`;
+      
+      // Populate size options
+      const sizeSelect = document.getElementById('modalProductSize');
+      sizeSelect.innerHTML = product.sizes.map(size => 
+        `<option value="${size}">${size}</option>`
+      ).join('');
+      
+      // Populate color options
+      const colorSelect = document.getElementById('modalProductColor');
+      colorSelect.innerHTML = product.colors.map(color => 
+        `<option value="${color}">${color}</option>`
+      ).join('');
+      
+      // Reset quantity
+      document.getElementById('modalProductQuantity').value = 1;
+      
+      // Store product ID for add to cart function
+      document.getElementById('productDetailsModal').dataset.productId = productId;
+      
+      // Show modal
+      modal.show();
+    }
+
+    // Function to add to cart from modal
+    function addToCartFromModal() {
+      const modal = document.getElementById('productDetailsModal');
+      const productId = parseInt(modal.dataset.productId);
+      const product = products.find(p => p.id === productId);
+      
+      const size = document.getElementById('modalProductSize').value;
+      const color = document.getElementById('modalProductColor').value;
+      const quantity = parseInt(document.getElementById('modalProductQuantity').value);
+
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        size: size,
+        color: color,
+        quantity: quantity
+      });
+      localStorage.setItem('cart', JSON.stringify(cart));
+
+      // Close modal
+      bootstrap.Modal.getInstance(modal).hide();
+      
+      // Show success message
+      alert('Item added to cart!');
+    }
+
+    // Initialize modal and category filters
+    document.addEventListener('DOMContentLoaded', function() {
+      // Display all products initially
+      displayProducts();
+
+      // Add click handlers for category filters
+      document.querySelectorAll('.category-filters button').forEach(button => {
+        button.addEventListener('click', function() {
+          // Remove active class from all buttons
+          document.querySelectorAll('.category-filters button').forEach(btn => {
+            btn.classList.remove('active');
+          });
+          // Add active class to clicked button
+          this.classList.add('active');
+          // Display products for selected category
+          displayProducts(this.dataset.category);
+        });
+      });
+    });
+  </script>
+
+  <!-- Product Details Modal -->
+  <div class="modal fade" id="productDetailsModal" tabindex="-1" aria-labelledby="productDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="productDetailsModalLabel">Product Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6">
+              <img id="modalProductImage" src="" alt="" class="img-fluid rounded">
+            </div>
+            <div class="col-md-6">
+              <h3 id="modalProductName"></h3>
+              <p class="text-primary h4" id="modalProductPrice"></p>
+              <div class="mb-3">
+                <label class="form-label">Size</label>
+                <select class="form-select" id="modalProductSize">
+                  <!-- Sizes will be populated dynamically -->
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Color</label>
+                <select class="form-select" id="modalProductColor">
+                  <!-- Colors will be populated dynamically -->
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Quantity</label>
+                <input type="number" class="form-control" id="modalProductQuantity" value="1" min="1">
+              </div>
+              <button class="btn btn-primary w-100" onclick="addToCartFromModal()">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </body>
 
