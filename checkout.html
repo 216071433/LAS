@@ -12,12 +12,6 @@
     
     <!-- EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script>
-        (function() {
-            emailjs.init("4SQj_7n1cg7F0GDhn");
-            console.log("EmailJS initialized");
-        })();
-    </script>
 </head>
 <body>
     <div class="container mt-5">
@@ -75,6 +69,11 @@
     </div>
 
     <script>
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("crV0nuze0XtGcSVyZ");
+        })();
+
         // Load order summary
         function loadOrderSummary() {
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -101,73 +100,74 @@
                 orderDetails += `Size: ${item.size}\n`;
                 orderDetails += `Color: ${item.color}\n`;
                 orderDetails += `Quantity: ${item.quantity}\n`;
-                orderDetails += `Price: R${item.price}\n\n`;
+                orderDetails += `Price: R${item.price}\n`;
+                orderDetails += `Subtotal: R${itemTotal}\n\n`;
             });
 
-            orderDetails += `Total: R${total}`;
+            orderDetails = `Order Details:\n${orderDetails}`;
+            orderDetails += `\nTotal: R${total}`;
             orderDetailsInput.value = orderDetails;
             totalElement.textContent = total;
         }
 
-        // Handle form submission
-        document.getElementById('checkout-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Show loading message
-            document.querySelector('.loading').style.display = 'block';
-            document.querySelector('.error-message').style.display = 'none';
-            document.querySelector('.sent-message').style.display = 'none';
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load order summary
+            loadOrderSummary();
 
-            // Prepare email template parameters
-            const templateParams = {
-                to_email: 'simelanelucky77@gmail.com',
-                from_name: document.getElementById('name').value,
-                from_email: document.getElementById('email').value,
-                phone: document.getElementById('phone').value,
-                address: document.getElementById('address').value,
-                city: document.getElementById('city').value,
-                postal_code: document.getElementById('postal_code').value,
-                order_details: document.getElementById('order_details').value,
-                email: document.getElementById('email').value,
-                order_number: 'LAS' + Date.now().toString().slice(-6), // Generate unique order number
-                order_date: new Date().toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                })
-            };
+            // Add form submit handler
+            const checkoutForm = document.getElementById('checkout-form');
+            if (checkoutForm) {
+                checkoutForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const formData = {
+                        email: "lasinformation12@gmail.com", // To Email
+                        from_name: document.getElementById('name').value,
+                        from_email: document.getElementById('email').value,
+                        reply_to: "lasinformation12@gmail.com",
+                        phone: document.getElementById('phone').value,
+                        address: document.getElementById('address').value,
+                        city: document.getElementById('city').value,
+                        postal_code: document.getElementById('postal_code').value,
+                        order_details: document.getElementById('order_details').value,
+                        total_price: document.getElementById('order-total').innerText,
+                        order_number: 'LAS' + Date.now().toString().slice(-6), // Generate unique order number
+                        order_date: new Date().toLocaleDateString('en-US', { 
+                            year: 'numeric', 
+                            month: 'long', 
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })
+                    };
 
-            console.log("Sending email with params:", templateParams);
+                    // Show loading message
+                    document.querySelector('.loading').style.display = 'block';
+                    document.querySelector('.error-message').style.display = 'none';
+                    document.querySelector('.sent-message').style.display = 'none';
 
-            // Send email using EmailJS
-            emailjs.send(
-                'service_bc4c8gb',
-                'template_wpnnzso',
-                templateParams
-            )
-            .then(function(response) {
-                console.log('SUCCESS!', response.status, response.text);
-                // Clear cart and show success message
-                localStorage.removeItem('cart');
-                document.querySelector('.loading').style.display = 'none';
-                document.querySelector('.sent-message').style.display = 'block';
-                
-                // Redirect to home page after 3 seconds
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 3000);
-            }, function(error) {
-                console.log('FAILED...', error);
-                document.querySelector('.loading').style.display = 'none';
-                document.querySelector('.error-message').style.display = 'block';
-                document.querySelector('.error-message').textContent = 'Failed to send order. Please try again. Error: ' + error.text;
-            });
+                    // Send email using EmailJS
+                    emailjs.send('service_mndoztz', 'template_5iapevm', formData)
+                        .then(function(response) {
+                            console.log('SUCCESS!', response.status, response.text);
+                            document.querySelector('.loading').style.display = 'none';
+                            document.querySelector('.sent-message').style.display = 'block';
+                            // Clear cart and redirect to home page after 3 seconds
+                            localStorage.removeItem('cart');
+                            setTimeout(() => {
+                                window.location.href = 'index.html';
+                            }, 3000);
+                        }, function(error) {
+                            console.log('FAILED...', error);
+                            document.querySelector('.loading').style.display = 'none';
+                            document.querySelector('.error-message').style.display = 'block';
+                            document.querySelector('.error-message').textContent = 'Failed to send order. Please try again. Error: ' + error.text;
+                        });
+                });
+            }
         });
-
-        // Load order summary when page loads
-        document.addEventListener('DOMContentLoaded', loadOrderSummary);
     </script>
 </body>
 </html> 
